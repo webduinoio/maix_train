@@ -188,11 +188,11 @@ class Classifier(Train_Base):
         history = self.history
 
         # set for server with no Tkagg GUI support, use agg(non-GUI backend)
-        # plt.switch_backend('agg')
+        plt.switch_backend('agg')
         
-        # fig, axes = plt.subplots(3, 1, constrained_layout=True, figsize = (10, 16), dpi=100)
-        # if limit_y_range:
-        #     plt.ylim(limit_y_range)
+        fig, axes = plt.subplots(3, 1, constrained_layout=True, figsize = (10, 16), dpi=100)
+        if limit_y_range:
+            plt.ylim(limit_y_range)
 
         # acc and val_acc
         # {'loss': [0.5860330664989357, 0.3398533443955177], 'accuracy': [0.70944744, 0.85026735], 'val_loss': [0.4948340670338699, 0.49342870752194096], 'val_accuracy': [0.7, 0.74285716]}
@@ -210,45 +210,45 @@ class Classifier(Train_Base):
                 "loss": "loss",
                 "val_loss": "val_loss"
             }
-        # axes[0].plot( history.history[kws['acc']], color='#2886EA', label="train")
-        # axes[0].plot( history.history[kws['val_acc']], color = '#3FCD6D', label="valid")
-        # axes[0].set_title('model accuracy')
-        # axes[0].set_ylabel('accuracy')
-        # axes[0].set_xlabel('epoch')
-        # axes[0].locator_params(integer=True)
-        # axes[0].legend()
+        axes[0].plot( history.history[kws['acc']], color='#2886EA', label="train")
+        axes[0].plot( history.history[kws['val_acc']], color = '#3FCD6D', label="valid")
+        axes[0].set_title('model accuracy')
+        axes[0].set_ylabel('accuracy')
+        axes[0].set_xlabel('epoch')
+        axes[0].locator_params(integer=True)
+        axes[0].legend()
 
         # loss and val_loss
-        # axes[1].plot( history.history[kws['loss']], color='#2886EA', label="train")
-        # axes[1].plot( history.history[kws['val_loss']], color = '#3FCD6D', label="valid")
-        # axes[1].set_title('model loss')
-        # axes[1].set_ylabel('loss')
-        # axes[1].set_xlabel('epoch')
-        # axes[1].locator_params(integer=True)
-        # axes[1].legend()
+        axes[1].plot( history.history[kws['loss']], color='#2886EA', label="train")
+        axes[1].plot( history.history[kws['val_loss']], color = '#3FCD6D', label="valid")
+        axes[1].set_title('model loss')
+        axes[1].set_ylabel('loss')
+        axes[1].set_xlabel('epoch')
+        axes[1].locator_params(integer=True)
+        axes[1].legend()
 
         # confusion matrix
-        # cm, labels_idx = self._get_confusion_matrix()
-        # axes[2].imshow(cm, interpolation='nearest', cmap = plt.cm.GnBu)
-        # axes[2].set_title("confusion matrix")
+        cm, labels_idx = self._get_confusion_matrix()
+        axes[2].imshow(cm, interpolation='nearest', cmap = plt.cm.GnBu)
+        axes[2].set_title("confusion matrix")
         # axes[2].colorbar()
-        # num_local = np.array(range(len(labels_idx)))
-        # axes[2].set_xticks(num_local)
-        # axes[2].set_xticklabels(labels_idx.keys(), rotation=45)
-        # axes[2].set_yticks(num_local)
-        # axes[2].set_yticklabels(labels_idx.keys())
+        num_local = np.array(range(len(labels_idx)))
+        axes[2].set_xticks(num_local)
+        axes[2].set_xticklabels(labels_idx.keys(), rotation=45)
+        axes[2].set_yticks(num_local)
+        axes[2].set_yticklabels(labels_idx.keys())
 
-        # thresh = cm.max() / 2. # front color black or white according to the background color
-        # for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
-        #     axes[2].text(j, i, format(cm[i, j], 'd'),
-        #             horizontalalignment = 'center',
-        #             color = 'white' if cm[i, j] > thresh else "black")
-        # axes[2].set_ylabel('True label')
-        # axes[2].set_xlabel('Predicted label')
+        thresh = cm.max() / 2. # front color black or white according to the background color
+        for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
+            axes[2].text(j, i, format(cm[i, j], 'd'),
+                    horizontalalignment = 'center',
+                    color = 'white' if cm[i, j] > thresh else "black")
+        axes[2].set_ylabel('True label')
+        axes[2].set_xlabel('Predicted label')
 
         # save to fs
-        # fig.savefig(out_path)
-        # plt.close()
+        fig.savefig(out_path)
+        plt.close()
         self.log.i("generate report image end")
 
     def save(self, h5_path=None, tflite_path=None):
