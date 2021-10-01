@@ -15,7 +15,7 @@ allow_cpu = True # True
 
 # classifier
 classifier_train_gpu_mem_require = 2*1024*1024*1024
-classifier_train_epochs = 10
+classifier_train_epochs = 30
 classifier_train_batch_size = 64
 classifier_train_max_classes_num = 15
 classifier_train_one_class_min_img_num = 10            # 一个类别中至少需要的样本数量
