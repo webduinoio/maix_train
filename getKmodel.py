@@ -13,6 +13,9 @@ for root, dirs, files in walk(path):
 	if len(dirs)==0:
 		shutil.move(root+"/"+labels , destPath+"."+labels)
 		shutil.move(root+"/"+report , destPath+"."+report)
-		shutil.move(root+"/"+kmodel , destPath+".kmodel")
+		shutil.move(root+"/"+kmodel , destPath+"."+kmodel)
+		print(root+"/"+labels , destPath+"."+labels)
+		print(root+"/"+report , destPath+"."+report)
+		print(root+"/"+kmodel , destPath+"."+kmodel)
 
 print("OK")
